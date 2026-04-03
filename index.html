@@ -156,6 +156,100 @@ nav ul li a:hover{
 
 
 
+
+  
+
+.poll-section{
+  text-align:center;
+  padding:60px 20px;
+  background:linear-gradient(135deg, #e6f7f2, #ffffff);
+}
+
+.poll-section h2{
+  color:#1e6f5c;
+  margin-bottom:10px;
+  font-size:28px;
+}
+
+.poll-section p{
+  color:#555;
+  font-size:15px;
+}
+
+/* BOX */
+.poll-box{
+  background:white;
+  display:inline-block;
+  padding:25px 30px;
+  border-radius:15px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.1);
+  margin-top:25px;
+  transition:0.3s;
+}
+
+.poll-box:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* OPTIONS */
+.poll-box label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:12px 0;
+  padding:10px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.poll-box label:hover{
+  background:#f1f1f1;
+}
+
+/* RADIO BUTTON CUSTOM */
+.poll-box input[type="radio"]{
+  accent-color:#1e6f5c;
+  transform:scale(1.2);
+}
+
+/* BUTTON */
+.poll-box button{
+  margin-top:15px;
+  padding:10px 25px;
+  background:linear-gradient(135deg,#1e6f5c,#28a745);
+  color:white;
+  border:none;
+  border-radius:25px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.poll-box button:hover{
+  background:linear-gradient(135deg,#ffd166,#ff9f1c);
+  color:black;
+  transform:scale(1.05);
+}
+
+/* RESULT BOX */
+#resultBox{
+  margin-top:20px;
+  padding:15px;
+  background:#f9f9f9;
+  border-radius:10px;
+  font-weight:bold;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+
+
+
+
+
+
+
 /* ================= SECTIONS ================= */
 section{
   padding:60px 40px;
@@ -562,6 +656,45 @@ uake liye diya gya google form fill kare
 
 
 
+<section class="poll-section">
+  <h2>🗳 Village Opinion Poll</h2>
+  <p>Apni rai dein (sirf ek option choose karein)</p>
+
+  <div class="poll-box">
+
+    <label>
+      <input type="radio" name="vote" value="good">
+      👍 Current representatives ka kaam achha hai
+    </label><br>
+
+    <label>
+      <input type="radio" name="vote" value="average">
+      😐 Kaam thik-thak hai
+    </label><br>
+
+    <label>
+      <input type="radio" name="vote" value="bad">
+      👎 Kaam santoshjanak nahi hai
+    </label><br><br>
+
+
+    <label>
+      <input type="radio" name="vote" value="verybad">
+      👎👎 Kaam bekar hai
+    </label><br><br>
+
+
+
+
+    <button onclick="submitVote()">Submit Vote</button>
+
+    <div id="resultBox"></div>
+
+  </div>
+</section>
+
+
+
 
 
   
@@ -627,6 +760,68 @@ uake liye diya gya google form fill kare
 </footer>
 
 
+
+
+
+
+
+<script>
+function submitVote(){
+  let vote = document.querySelector('input[name="vote"]:checked');
+
+  if(!vote){
+    alert("Please select an option!");
+    return;
+  }
+
+  let good = parseInt(localStorage.getItem("good")) || 0;
+  let average = parseInt(localStorage.getItem("average")) || 0;
+  let bad = parseInt(localStorage.getItem("bad")) || 0;
+  let verybad = parseInt(localStorage.getItem("verybad")) || 0;
+
+  if(vote.value === "good"){
+    good++;
+    localStorage.setItem("good", good);
+  }
+  else if(vote.value === "average"){
+    average++;
+    localStorage.setItem("average", average);
+  }
+  else if(vote.value === "bad"){
+    bad++;
+    localStorage.setItem("bad", bad);
+  }
+  else if(vote.value === "verybad"){
+    verybad++;
+    localStorage.setItem("verybad", verybad);
+  }
+
+  showResult();
+}
+
+function showResult(){
+  let good = localStorage.getItem("good") || 0;
+  let average = localStorage.getItem("average") || 0;
+  let bad = localStorage.getItem("bad") || 0;
+  let verybad = localStorage.getItem("verybad") || 0;
+
+  document.getElementById("resultBox").innerHTML = `
+    <h3>📊 Results</h3>
+    👍 Good: ${good} votes <br>
+    😐 Average: ${average} votes <br>
+    👎 Bad: ${bad} votes <br>
+    👎👎 Very Bad: ${verybad} votes
+  `;
+}
+
+window.onload = showResult;
+</script>
+
+
+
+
+
+  
 </body>
 </html>
 
