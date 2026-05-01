@@ -461,7 +461,33 @@ iframe[title="chat widget"] {
 
 
 
+.contact-container{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  max-width:900px;
+  margin:auto;
+  gap:30px;
+  flex-wrap:wrap;
+}
 
+.contact-info{
+  flex:1;
+}
+
+.contact-photo{
+  flex:1;
+  text-align:center;
+}
+
+.contact-photo img{
+  width:200px;
+  height:200px;
+  object-fit:cover;
+  border-radius:50%;
+  border:4px solid #1e6f5c;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
 
 
 
@@ -748,11 +774,26 @@ uake liye diya gya google form fill kare
 
 <!-- ===== CONTACT ===== --> 
 <section id="contact">
- <h2>Contact & Location</h2> <div class="about"> 
-<p><b>Village:</b> Derhgaon</p> <p><b>Block:</b> Dawath</p>
- <p><b>District:</b> Rohtas, Bihar</p> <p><b>Email:</b>
- harinandankumar9119@gmail.com</p> </div> </section>
+  <h2>Contact & Location</h2>
 
+  <div class="contact-container">
+
+    <!-- LEFT SIDE (TEXT) -->
+    <div class="contact-info">
+      <p><b>Village:</b> Derhgaon</p>
+      <p><b>Block:</b> Dawath</p>
+      <p><b>District:</b> Rohtas, Bihar</p>
+      <p><b>Email:</b> harinandankumar9119@gmail.com</p>
+    </div>
+
+    <!-- RIGHT SIDE (PHOTO) -->
+    <div class="contact-photo">
+      <img src="myphoto.jpg" alt="Harinandan Kumar">
+       <p><b>DEVELOPER:</b> Harinandan kumar</p>
+    </div>
+
+  </div>
+</section>
 
 
 
