@@ -1,4 +1,4 @@
-<style>
+
 /* ================= GLOBAL ================= */
 *{
   margin:0;
@@ -360,14 +360,6 @@ footer{
 }
 
 
-<li class="dropdown">
-  <a href="#">Facilities <span class="arrow">▼</span></a>
-
-  <ul class="dropdown-menu">
-    <li><a href="public.html">Public Facilities</a></li>
-    <li><a href="private.html">Private Facilities</a></li>
-  </ul>
-</li>
 
 
 .arrow{
@@ -419,7 +411,7 @@ footer{
 }
   
   
-<style>
+
 .social-links a {
   color: white;
   font-size: 22px;
@@ -430,11 +422,11 @@ footer{
 .social-links a:hover {
   color: #00ffcc;
 }
-</style>
 
 
 
-<style>
+
+
 /* Chat widget thoda upar lana */
 iframe[title="chat widget"] {
     bottom: 80px !important;
@@ -447,4 +439,3 @@ iframe[title="chat widget"] {
         right: 5% !important;
     }
 }
-</style>
