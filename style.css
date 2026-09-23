@@ -412,16 +412,7 @@ footer{
   
   
 
-.social-links a {
-  color: rgb(183, 111, 111);
-  font-size: 22px;
-  margin: 0 10px;
-  text-decoration: none;
-}
 
-.social-links a:hover {
-  color: #00ffcc;
-}
 
 
 
@@ -437,6 +428,80 @@ iframe[title="chat widget"] {
     iframe[title="chat widget"] {
         width: 90% !important;
         right: 5% !important;
+    }
+}
+
+
+
+/* ================= SOCIAL MEDIA FOOTER FIX ================= */
+
+footer {
+    background: #1e6f5c;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+    width: 100%;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.social-links a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 45px;
+    height: 45px;
+
+    margin: 0;
+
+    border-radius: 50%;
+
+    background: white;
+    color: #1e6f5c;
+
+    font-size: 21px;
+    line-height: 1;
+
+    text-decoration: none;
+
+    visibility: visible;
+    opacity: 1;
+
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background: #ffd166;
+    color: #000;
+    transform: translateY(-4px);
+}
+
+
+/* ===== MOBILE FOOTER ===== */
+
+@media (max-width: 600px) {
+
+    footer {
+        padding: 22px 10px;
+    }
+
+    .social-links {
+        gap: 10px;
+        margin-top: 14px;
+    }
+
+    .social-links a {
+        width: 42px;
+        height: 42px;
+        font-size: 19px;
     }
 }
 
