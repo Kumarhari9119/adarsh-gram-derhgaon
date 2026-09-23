@@ -349,6 +349,8 @@ nav ul li a:hover{
         <label for="sessionSelect"><i class="fas fa-calendar-alt"></i> Select Financial Year / Session:</label>
         <select id="sessionSelect" required>
           <option value="">-- Choose Financial Year --</option>
+          <option value="2021-22">2021-22</option>
+           <option value="2022-23">2022-23</option>
           <option value="2023-24">2023-24</option>
           <option value="2024-25">2024-25</option>
           <option value="2025-26">2025-26</option>
@@ -409,57 +411,105 @@ nav ul li a:hover{
     </div>
   </footer>
 
-  <script>
+ <script>
     // Months data for each financial year
     const monthsData = {
-      "2023-24": [
-        { name: "April 2023", url: "https://egram-swaraj.nic.in/" },
-        { name: "May 2023", url: "https://egram-swaraj.nic.in/" },
-        { name: "June 2023", url: "https://egram-swaraj.nic.in/" },
-        { name: "July 2023", url: "https://egram-swaraj.nic.in/" },
-        { name: "August 2023", url: "https://egram-swaraj.nic.in/" },
-        { name: "September 2023", url: "https://egram-swaraj.nic.in/" },
-        { name: "October 2023", url: "https://egram-swaraj.nic.in/" },
-        { name: "November 2023", url: "https://egram-swaraj.nic.in/" },
-        { name: "December 2023", url: "https://egram-swaraj.nic.in/" },
-        { name: "January 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "February 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "March 2024", url: "https://egram-swaraj.nic.in/" }
-      ],
-      "2024-25": [
-        { name: "April 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "May 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "June 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "July 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "August 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "September 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "October 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "November 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "December 2024", url: "https://egram-swaraj.nic.in/" },
-        { name: "January 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "February 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "March 2025", url: "https://egram-swaraj.nic.in/" }
-      ],
-      "2025-26": [
-        { name: "April 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "May 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "June 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "July 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "August 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "September 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "October 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "November 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "December 2025", url: "https://egram-swaraj.nic.in/" },
-        { name: "January 2026", url: "https://egram-swaraj.nic.in/" },
-        { name: "February 2026", url: "https://egram-swaraj.nic.in/" },
-        { name: "March 2026", url: "https://egram-swaraj.nic.in/" }
+  "2020-21": [
+  { name: "April 2020", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=4&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "May 2020", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=5&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "June 2020", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=6&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "July 2020", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=7&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "August 2020", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=8&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "September 2020", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=9&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "October 2020", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=10&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "November 2020", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=11&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "December 2020", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=12&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "January 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=1&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "February 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=2&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "March 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2020-2021&month=3&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" }
+],
+
+"2021-22": [
+  { name: "April 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=4&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "May 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=5&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "June 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=6&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "July 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=7&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "August 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=8&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "September 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=9&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "October 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=10&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "November 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=11&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "December 2021", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=12&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "January 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=1&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "February 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=2&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "March 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2021-2022&month=3&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" }
+],
+
+"2022-23": [
+  { name: "April 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=4&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "May 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=5&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "June 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=6&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "July 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=7&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "August 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=8&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "September 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=9&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "October 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=10&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "November 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=11&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "December 2022", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=12&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "January 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=1&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "February 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=2&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "March 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2022-2023&month=3&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" }
+],
+
+"2023-24": [
+  { name: "April 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=4&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "May 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=5&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "June 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=6&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "July 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=7&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "August 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=8&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "September 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=9&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "October 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=10&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "November 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=11&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "December 2023", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=12&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "January 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=1&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "February 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=2&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "March 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2023-2024&month=3&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" }
+],
+
+"2024-25": [
+  { name: "April 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=4&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "May 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=5&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "June 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=6&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "July 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=7&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "August 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=8&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "September 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=9&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "October 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=10&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "November 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=11&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "December 2024", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=12&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "January 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=1&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "February 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=2&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "March 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2024-2025&month=3&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" }
+],
+
+"2025-26": [
+  { name: "April 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=4&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "May 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=5&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "June 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=6&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "July 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=7&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "August 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=8&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "September 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=9&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+  { name: "October 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=10&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" }
+,
+        { name: "November 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=11&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+        { name: "December 2025", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=12&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+        { name: "January 2026", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=1&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+        { name: "February 2026", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=2&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+        { name: "March 2026", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2025-2026&month=3&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" }
       ],
       "2026-27": [
-        { name: "April 2026", url: "https://egram-swaraj.nic.in/" },
-        { name: "May 2026", url: "https://egram-swaraj.nic.in/" },
-        { name: "June 2026", url: "https://egram-swaraj.nic.in/" },
-        { name: "July 2026", url: "https://egram-swaraj.nic.in/" },
-        { name: "August 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "April 2026", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2026-2027&month=4&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+        { name: "May 2026", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2026-2027&month=5&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+        { name: "June 2026", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2026-2027&month=6&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+        { name: "July 2026", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2026-2027&month=7&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
+        { name: "August 2026", url: "https://egramswaraj.gov.in/voucherWiseReport.do?voucherWise=Y&finYear=2026-2027&month=8&schemewise=P&state=10&district=206&block=2595&village=99755&schemeCode=-1" },
         { name: "September 2026", url: "https://egram-swaraj.nic.in/" },
         { name: "October 2026", url: "https://egram-swaraj.nic.in/" },
         { name: "November 2026", url: "https://egram-swaraj.nic.in/" },
