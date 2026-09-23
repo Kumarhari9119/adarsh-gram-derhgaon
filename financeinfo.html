@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" href="favicon.png">
+  <link rel="shortcut icon" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  
+  <meta charset="UTF-8"> 
+  <meta name="google-site-verification" content="google4492451d1ae9b2b9" />
+  
+  <title>Financial Records | Adarsh Gram Derhgaon</title>
+  <meta name="description" content="View financial records and statements of Derhgaon village">
+  <meta name="keywords" content="financial, records, derhgaon, gram swaraj, egram">
+  <meta name="author" content="Adarsh Gram Derhgaon Team">
+  
+  <meta property="og:title" content="Financial Records | Adarsh Gram Derhgaon">
+  <meta property="og:description" content="Access financial records and egram swaraj portal">
+  <meta property="og:type" content="website">
+  
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+</head>
+
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <nav> 
+    <div class="nav-left"> 
+      <img src="hero6.png" alt="Derhgaon Logo"> 
+      <h2>DERHGAON</h2> 
+    </div> 
+   
+    <ul> 
+      <li><a href="index.html#home">Home</a></li> 
+      <li><a href="index.html#profile">Profile</a></li> 
+      <li class="dropdown"> 
+        <a href="#">Facilities ▼ </a> 
+        <ul class="dropdown-menu"> 
+          <li><a href="private.html">Private Facilities</a></li> 
+          <li><a href="public.html">Public Facilities</a></li> 
+        </ul> 
+      </li> 
+      <li><a href="index.html#demography">Population</a></li> 
+      <li class="dropdown"> 
+        <a href="#">Politics ▼ </a>  
+        <ul class="dropdown-menu"> 
+          <li><a href="local.html">Local Politics</a></li> 
+        </ul> 
+      </li> 
+      <li><a href="#transport">Transport</a></li> 
+      <li><a href="#gallery">Gallery</a></li> 
+      <li><a href="#COMPLAINT SECTION">Complaint Section</a></li> 
+      <li><a href="viewfinancial.html">Financial</a></li>
+      <li><a href="#map">Map</a></li> 
+    </ul> 
+  </nav>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <div class="container">
+    <h1><i class="fas fa-file-invoice-dollar"></i> Financial Records</h1>
+    <p class="subtitle">Access Financial Statements & eGram Swaraj Portal</p>
+    
+    <form id="financialForm">
+      <!-- Session/Year Selection -->
+      <div class="form-group">
+        <label for="sessionSelect"><i class="fas fa-calendar-alt"></i> Select Financial Year / Session:</label>
+        <select id="sessionSelect" required>
+          <option value="">-- Choose Financial Year --</option>
+          <option value="2023-24">2023-24</option>
+          <option value="2024-25">2024-25</option>
+          <option value="2025-26">2025-26</option>
+          <option value="2026-27">2026-27</option>
+        </select>
+      </div>
+      
+      <!-- Month Selection -->
+      <div class="form-group">
+        <label for="monthSelect"><i class="fas fa-calendar-days"></i> Select Month:</label>
+        <select id="monthSelect" required disabled>
+          <option value="">-- First Select a Year --</option>
+        </select>
+        <div class="error-message" id="errorMsg"></div>
+      </div>
+      
+      <!-- Buttons -->
+      <div class="button-group">
+        <button type="button" class="btn btn-view" id="viewBtn" onclick="viewFinancial()" disabled>
+          <i class="fas fa-external-link-alt"></i> View on eGram Swaraj
+        </button>
+        <button type="reset" class="btn btn-reset" onclick="resetForm()">
+          <i class="fas fa-redo"></i> Reset
+        </button>
+      </div>
+      
+      <div class="info-box">
+        <i class="fas fa-info-circle"></i>
+        <strong>Note:</strong> Clicking "View" will redirect you to the official eGram Swaraj portal where you can access detailed financial records and receipts for the selected month.
+      </div>
+    </form>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <p>© 2026 Derhgaon Village | Developed by Harinandan Kumar
+    </p>
+   
+    <div class="social-links">
+      <a href="https://www.facebook.com/adarsh.gram.derhgaon" target="_blank">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://www.instagram.com/kumarhari91119/" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://m.youtube.com/channel/UChq3w6JBBfjm73U_9Cfa4qg" target="_blank">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+      <a href="https://wa.me/+917520339597" target="_blank" aria-label="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // Months data for each financial year
+    const monthsData = {
+      "2023-24": [
+        { name: "April 2023", url: "https://egram-swaraj.nic.in/" },
+        { name: "May 2023", url: "https://egram-swaraj.nic.in/" },
+        { name: "June 2023", url: "https://egram-swaraj.nic.in/" },
+        { name: "July 2023", url: "https://egram-swaraj.nic.in/" },
+        { name: "August 2023", url: "https://egram-swaraj.nic.in/" },
+        { name: "September 2023", url: "https://egram-swaraj.nic.in/" },
+        { name: "October 2023", url: "https://egram-swaraj.nic.in/" },
+        { name: "November 2023", url: "https://egram-swaraj.nic.in/" },
+        { name: "December 2023", url: "https://egram-swaraj.nic.in/" },
+        { name: "January 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "February 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "March 2024", url: "https://egram-swaraj.nic.in/" }
+      ],
+      "2024-25": [
+        { name: "April 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "May 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "June 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "July 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "August 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "September 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "October 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "November 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "December 2024", url: "https://egram-swaraj.nic.in/" },
+        { name: "January 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "February 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "March 2025", url: "https://egram-swaraj.nic.in/" }
+      ],
+      "2025-26": [
+        { name: "April 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "May 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "June 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "July 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "August 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "September 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "October 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "November 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "December 2025", url: "https://egram-swaraj.nic.in/" },
+        { name: "January 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "February 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "March 2026", url: "https://egram-swaraj.nic.in/" }
+      ],
+      "2026-27": [
+        { name: "April 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "May 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "June 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "July 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "August 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "September 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "October 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "November 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "December 2026", url: "https://egram-swaraj.nic.in/" },
+        { name: "January 2027", url: "https://egram-swaraj.nic.in/" },
+        { name: "February 2027", url: "https://egram-swaraj.nic.in/" },
+        { name: "March 2027", url: "https://egram-swaraj.nic.in/" }
+      ]
+    };
+    
+    // Handle Session Selection
+    document.getElementById('sessionSelect').addEventListener('change', function() {
+      const session = this.value;
+      const monthSelect = document.getElementById('monthSelect');
+      const viewBtn = document.getElementById('viewBtn');
+      
+      monthSelect.innerHTML = '<option value="">-- Choose Month --</option>';
+      
+      if (session && monthsData[session]) {
+        monthsData[session].forEach(month => {
+          const option = document.createElement('option');
+          option.value = month.url;
+          option.textContent = month.name;
+          monthSelect.appendChild(option);
+        });
+        monthSelect.disabled = false;
+        viewBtn.disabled = true;
+      } else {
+        monthSelect.disabled = true;
+        viewBtn.disabled = true;
+      }
+    });
+    
+    // Handle Month Selection
+    document.getElementById('monthSelect').addEventListener('change', function() {
+      const viewBtn = document.getElementById('viewBtn');
+      viewBtn.disabled = !this.value;
+    });
+    
+    // View Financial Records
+    function viewFinancial() {
+      const monthSelect = document.getElementById('monthSelect');
+      const url = monthSelect.value;
+      
+      if (url) {
+        window.open(url, '_blank');
+      } else {
+        alert('Please select both Year and Month!');
+      }
+    }
+    
+    // Reset Form
+    function resetForm() {
+      document.getElementById('financialForm').reset();
+      document.getElementById('monthSelect').disabled = true;
+      document.getElementById('viewBtn').disabled = true;
+      document.getElementById('errorMsg').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
