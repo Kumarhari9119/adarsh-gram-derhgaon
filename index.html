@@ -98,6 +98,7 @@
     <li><a href="#COMPLAINT SECTION">complaint section</a></li>
 
      <li><a href="financeinfo.html">Financial</a></li>
+     <li><a href="family-tree">Family Tree</a></li>
     <li><a href="#map">Map</a></li>
   </ul>
 </nav>
@@ -283,6 +284,97 @@ uake liye diya gya google form fill kare
 
   </div>
 </section>
+
+
+
+
+
+
+
+
+
+
+<!-- ================= FAMILY TREE / VANSHAWALI ================= -->
+<section id="family-tree" class="family-tree-section">
+  <h2>🌳 Family Tree / गाँव की वंशावली</h2>
+
+  <p class="family-intro">
+    Apne parivar ki vanshavali darj karein aur gaon ke
+    doosre parivaron ki approved hierarchy dekhein.
+  </p>
+
+  <div class="family-notice">
+    <strong>Privacy:</strong> Sirf wahi jaankari submit karein
+    jise aap public karne ke liye adhikrit hain. Approved
+    family trees website par sabko dikh sakti hain.
+  </div>
+
+  <div class="family-panel">
+    <h3>➕ Nayi Vanshavali Jodein</h3>
+
+    <label for="familyName">Parivar ka naam *</label>
+    <input id="familyName" type="text"
+      maxlength="100" placeholder="Jaise: Singh Parivar" />
+
+    <p class="family-help">
+      Neeche members add karein. Har member ke liye uske
+      parent ka naam select karein. Sabse pehli generation
+      ke liye "Koi parent nahi" chunein.
+    </p>
+
+    <div class="family-table-wrap">
+      <table class="family-table">
+        <thead>
+          <tr>
+            <th>Member ka naam *</th>
+            <th>Relationship *</th>
+            <th>Parent</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="familyMembersBody"></tbody>
+      </table>
+    </div>
+
+    <button type="button" id="addFamilyMember">
+      + Add Member
+    </button>
+
+    <button type="button" id="previewFamily">
+      Preview Family Tree
+    </button>
+
+    <div id="familyPreview" class="family-preview"
+      aria-live="polite"></div>
+
+    <button type="button" id="submitFamily">
+      Submit for Review
+    </button>
+
+    <p id="familyMessage" role="status" aria-live="polite"></p>
+  </div>
+
+  <div class="family-panel">
+    <h3>🔎 Approved Family Trees</h3>
+
+    <input id="familySearch" type="search"
+      placeholder="Parivar ya mukhiya ka naam search karein" />
+
+    <div id="familyDirectory">
+      Approved family trees yahan dikhengi.
+    </div>
+
+    <div id="selectedFamilyTree" class="family-preview"></div>
+  </div>
+</section>
+
+
+<!-- ================= END FAMILY TREE ================= -->
+
+
+
+
+
 
 
 
