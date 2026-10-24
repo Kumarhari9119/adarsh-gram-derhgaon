@@ -359,83 +359,26 @@ uake liye diya gya google form fill kare
 
 
 
-<script>
-function submitVote(){
-  let vote = document.querySelector('input[name="vote"]:checked');
-
-  if(!vote){
-    alert("Please select an option!");
-    return;
-  }
-
-  let good = parseInt(localStorage.getItem("good")) || 0;
-  let average = parseInt(localStorage.getItem("average")) || 0;
-  let bad = parseInt(localStorage.getItem("bad")) || 0;
-  let verybad = parseInt(localStorage.getItem("verybad")) || 0;
-
-  if(vote.value === "good"){
-    good++;
-    localStorage.setItem("good", good);
-  }
-  else if(vote.value === "average"){
-    average++;
-    localStorage.setItem("average", average);
-  }
-  else if(vote.value === "bad"){
-    bad++;
-    localStorage.setItem("bad", bad);
-  }
-  else if(vote.value === "verybad"){
-    verybad++;
-    localStorage.setItem("verybad", verybad);
-  }
-
-  showResult();
-}
-
-function showResult(){
-  let good = localStorage.getItem("good") || 0;
-  let average = localStorage.getItem("average") || 0;
-  let bad = localStorage.getItem("bad") || 0;
-  let verybad = localStorage.getItem("verybad") || 0;
-
-  document.getElementById("resultBox").innerHTML = `
-    <h3>📊 Results</h3>
-    👍 Good: ${good} votes <br>
-    😐 Average: ${average} votes <br>
-    👎 Bad: ${bad} votes <br>
-    👎👎 Very Bad: ${verybad} votes
-  `;
-}
-
-window.onload = showResult;
-</script>
 
 
+<script> type="module"
+  import {
+    initializeApp
+  } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
 
+  import {
+    getFirestore,
+    doc,
+    runTransaction,
+    onSnapshot,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
+  import {
+    getAuth,
+    signInAnonymously
+  } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
 
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-analytics.js";
-
-
-import { getFirestore, setDoc, doc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
-
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-
-
-
-
-
-
-
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
     apiKey: "AIzaSyCWGbXd3oLDUnB-a7p-zCCOclYvxzeJYEk",
     authDomain: "derhgaon-a2b29.firebaseapp.com",
@@ -446,43 +389,112 @@ import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/1
     measurementId: "G-6B1SHRHH19"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
   const db = getFirestore(app);
-
   const auth = getAuth(app);
 
-async function testFirebaseConnection() {
-  try {
-    const result = await signInAnonymously(auth);
-    const uid = result.user.uid;
+  const summaryRef = doc(db, "pollResults", "summary");
 
-    const testRef = doc(db, "connectionTests", uid);
+  const authReady = signInAnonymously(auth);
 
-    await setDoc(testRef, {
-      status: "connected",
-      testedAt: serverTimestamp()
+  // Public results: only aggregate counts are displayed.
+  authReady.then(() => {
+    onSnapshot(summaryRef, (snapshot) => {
+      if (!snapshot.exists()) {
+        document.getElementById("resultBox").textContent =
+          "Poll results are not initialized yet.";
+        return;
+      }
+
+      const r = snapshot.data();
+
+      document.getElementById("resultBox").innerHTML = `
+        <h3>📊 Village Opinion Poll Results</h3>
+        👍 Good: ${r.good} votes<br>
+        😐 Average: ${r.average} votes<br>
+        👎 Bad: ${r.bad} votes<br>
+        👎👎 Very Bad: ${r.verybad} votes<br>
+        <strong>Total votes: ${r.total}</strong>
+      `;
+    }, (error) => {
+      console.error("Results error:", error);
     });
+  }).catch((error) => {
+    console.error("Authentication error:", error);
+  });
 
-    const saved = await getDoc(testRef);
+  // Keep the existing HTML button: onclick="submitVote()"
+  window.submitVote = async function () {
+    const selected = document.querySelector(
+      'input[name="vote"]:checked'
+    );
 
-    if (saved.exists()) {
-      console.log("SUCCESS: Firebase Auth + Firestore working!", uid);
+    if (!selected) {
+      alert("Please select an option!");
+      return;
     }
-  } catch (error) {
-    console.error("Firebase test failed:", error.code, error.message);
-  }
-}
 
-testFirebaseConnection();
+    const choice = selected.value;
 
+    if (!["good", "average", "bad", "verybad"].includes(choice)) {
+      alert("Invalid option.");
+      return;
+    }
 
+    try {
+      const result = await authReady;
+      const uid = result.user.uid;
+      const voteRef = doc(db, "votes", uid);
 
+      await runTransaction(db, async (transaction) => {
+        const voteSnap = await transaction.get(voteRef);
+        const summarySnap = await transaction.get(summaryRef);
 
+        if (!summarySnap.exists()) {
+          throw new Error("Poll summary document is missing.");
+        }
 
+        const counts = summarySnap.data();
+        const previousChoice = voteSnap.exists()
+          ? voteSnap.data().choice
+          : null;
 
+        const next = {
+          good: counts.good,
+          average: counts.average,
+          bad: counts.bad,
+          verybad: counts.verybad,
+          total: counts.total
+        };
+
+        if (previousChoice !== choice) {
+          if (previousChoice && next[previousChoice] > 0) {
+            next[previousChoice]--;
+          }
+
+          if (!previousChoice) {
+            next.total++;
+          }
+
+          next[choice]++;
+        }
+
+        transaction.set(voteRef, {
+          choice: choice,
+          updatedAt: serverTimestamp()
+        });
+
+        transaction.update(summaryRef, next);
+      });
+
+      alert("Your vote has been saved!");
+    } catch (error) {
+      console.error("Vote error:", error);
+      alert(
+        "Vote save nahi hua. Please Console mein error check karein."
+      );
+    }
+  };
 
 
 
