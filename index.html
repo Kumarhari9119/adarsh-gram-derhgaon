@@ -459,17 +459,18 @@ uake liye diya gya google form fill kare
   } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
 
   import {
-    getFirestore,
-    doc,
-    runTransaction,
-    onSnapshot,
-    serverTimestamp
+    getFirestore, doc, runTransaction, onSnapshot, serverTimestamp
   } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
   import {
-    getAuth,
-    signInAnonymously
+    getAuth, signInAnonymously
   } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+
+
+import {
+  collection, addDoc,query, where
+} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+
 
   const firebaseConfig = {
     apiKey: "AIzaSyCWGbXd3oLDUnB-a7p-zCCOclYvxzeJYEk",
@@ -589,6 +590,320 @@ uake liye diya gya google form fill kare
   };
 
 
+
+
+
+
+  
+
+const membersBody = document.getElementById("familyMembersBody");
+const familyNameInput = document.getElementById("familyName");
+const familyMessage = document.getElementById("familyMessage");
+const familyPreview = document.getElementById("familyPreview");
+const directory = document.getElementById("familyDirectory");
+const selectedTree = document.getElementById("selectedFamilyTree");
+
+let memberRows = [];
+let approvedFamilies = [];
+
+function makeMemberRow() {
+  const id = crypto.randomUUID();
+  memberRows.push({ id, name: "", relation: "Beta", parentId: "" });
+  renderMemberRows();
+}
+
+function renderMemberRows() {
+  membersBody.replaceChildren();
+
+  memberRows.forEach((member, index) => {
+    const tr = document.createElement("tr");
+
+    const nameCell = document.createElement("td");
+    const nameInput = document.createElement("input");
+    nameInput.placeholder = "Member ka naam";
+    nameInput.maxLength = 100;
+    nameInput.value = member.name;
+    nameInput.addEventListener("input", () => {
+      member.name = nameInput.value;
+      renderParentOptions();
+    });
+    nameCell.append(nameInput);
+
+    const relationCell = document.createElement("td");
+    const relationSelect = document.createElement("select");
+
+    [
+      ["Mukhiya / Pehli generation", "Mukhiya"],
+      ["Pita", "Pita"],
+      ["Mata", "Mata"],
+      ["Beta", "Beta"],
+      ["Beti", "Beti"],
+      ["Spouse", "Spouse"],
+      ["Other relative", "Other"]
+    ].forEach(([label, value]) => {
+      const option = document.createElement("option");
+      option.textContent = label;
+      option.value = value;
+      relationSelect.append(option);
+    });
+
+    relationSelect.value = member.relation;
+    relationSelect.addEventListener("change", () => {
+      member.relation = relationSelect.value;
+    });
+    relationCell.append(relationSelect);
+
+    const parentCell = document.createElement("td");
+    const parentSelect = document.createElement("select");
+    parentSelect.dataset.memberId = member.id;
+    parentSelect.addEventListener("change", () => {
+      member.parentId = parentSelect.value;
+    });
+    parentCell.append(parentSelect);
+
+    const actionCell = document.createElement("td");
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.textContent = "Remove";
+    removeButton.addEventListener("click", () => {
+      memberRows = memberRows.filter(m => m.id !== member.id);
+      memberRows.forEach(m => {
+        if (m.parentId === member.id) m.parentId = "";
+      });
+      renderMemberRows();
+    });
+    actionCell.append(removeButton);
+
+    tr.append(nameCell, relationCell, parentCell, actionCell);
+    membersBody.append(tr);
+  });
+
+  renderParentOptions();
+}
+
+function renderParentOptions() {
+  membersBody.querySelectorAll("select[data-member-id]").forEach(select => {
+    const member = memberRows.find(m => m.id === select.dataset.memberId);
+    if (!member) return;
+
+    select.replaceChildren();
+
+    const rootOption = document.createElement("option");
+    rootOption.value = "";
+    rootOption.textContent = "Koi parent nahi";
+    select.append(rootOption);
+
+    memberRows
+      .filter(m => m.id !== member.id && m.name.trim())
+      .forEach(m => {
+        const option = document.createElement("option");
+        option.value = m.id;
+        option.textContent = m.name.trim();
+        select.append(option);
+      });
+
+    select.value = member.parentId;
+  });
+}
+
+function getFamilyData() {
+  const name = familyNameInput.value.trim();
+
+  if (!name) throw new Error("Parivar ka naam likhein.");
+
+  if (memberRows.length < 1 || memberRows.length > 100) {
+    throw new Error("1 se 100 family members add karein.");
+  }
+
+  const seenNames = new Set();
+
+  const members = memberRows.map(m => {
+    const memberName = m.name.trim();
+
+    if (!memberName) {
+      throw new Error("Har member ka naam fill karein.");
+    }
+
+    if (seenNames.has(memberName.toLowerCase())) {
+      throw new Error("Members ke naam alag rakhein, taaki relationships sahi rahen.");
+    }
+    seenNames.add(memberName.toLowerCase());
+
+    if (m.parentId && !memberRows.some(p => p.id === m.parentId)) {
+      throw new Error("Kisi member ka parent valid nahi hai.");
+    }
+
+    return {
+      id: m.id,
+      name: memberName,
+      relation: m.relation,
+      parentId: m.parentId || null
+    };
+  });
+
+  // Reject circular parent relationships.
+  const byId = new Map(members.map(m => [m.id, m]));
+  members.forEach(m => {
+    const seen = new Set([m.id]);
+    let parentId = m.parentId;
+
+    while (parentId) {
+      if (seen.has(parentId)) {
+        throw new Error("Parent relationship mein circular link hai.");
+      }
+      seen.add(parentId);
+      parentId = byId.get(parentId)?.parentId || null;
+    }
+  });
+
+  return { name, members };
+}
+
+function drawTree(container, family) {
+  container.replaceChildren();
+
+  const heading = document.createElement("h4");
+  heading.textContent = family.name;
+  container.append(heading);
+
+  const byParent = new Map();
+  family.members.forEach(member => {
+    const key = member.parentId || "ROOT";
+    if (!byParent.has(key)) byParent.set(key, []);
+    byParent.get(key).push(member);
+  });
+
+  function addBranch(parentId, parentElement, visited = new Set()) {
+    (byParent.get(parentId) || []).forEach(member => {
+      if (visited.has(member.id)) return;
+
+      const nextVisited = new Set(visited);
+      nextVisited.add(member.id);
+
+      const node = document.createElement("div");
+      node.className = "family-node";
+      node.textContent = `${member.name} (${member.relation})`;
+      parentElement.append(node);
+
+      const children = byParent.get(member.id) || [];
+      if (children.length) {
+        const group = document.createElement("div");
+        group.className = "family-children";
+        parentElement.append(group);
+        addBranch(member.id, group, nextVisited);
+      }
+    });
+  }
+
+  addBranch("ROOT", container);
+}
+
+document.getElementById("addFamilyMember")
+  .addEventListener("click", makeMemberRow);
+
+document.getElementById("previewFamily")
+  .addEventListener("click", () => {
+    try {
+      const family = getFamilyData();
+      drawTree(familyPreview, family);
+      familyMessage.textContent = "Preview ready. Details verify kar lein.";
+    } catch (error) {
+      familyMessage.textContent = error.message;
+    }
+  });
+
+document.getElementById("submitFamily")
+  .addEventListener("click", async () => {
+    try {
+      const family = getFamilyData();
+      familyMessage.textContent = "Submitting...";
+
+      await authReady;
+
+      await addDoc(collection(db, "familySubmissions"), {
+        familyName: family.name,
+        members: family.members,
+        status: "pending",
+        createdAt: serverTimestamp()
+      });
+
+      familyMessage.textContent =
+        "Submission receive ho gayi. Review ke baad publish ki jayegi.";
+    } catch (error) {
+      console.error("Family submission error:", error);
+      familyMessage.textContent = error.message ||
+        "Submission nahi ho payi. Console check karein.";
+    }
+  });
+
+function renderDirectory() {
+  const search = document.getElementById("familySearch").value
+    .trim().toLowerCase();
+
+  directory.replaceChildren();
+
+  const matches = approvedFamilies.filter(f =>
+    f.familyName.toLowerCase().includes(search) ||
+    f.members.some(m => m.name.toLowerCase().includes(search))
+  );
+
+  if (!matches.length) {
+    directory.textContent = "Abhi koi matching approved family nahi mili.";
+    return;
+  }
+
+  matches.forEach(family => {
+    const card = document.createElement("div");
+    card.className = "family-card";
+
+    const title = document.createElement("strong");
+    title.textContent = family.familyName;
+
+    const count = document.createElement("p");
+    count.textContent = `${family.members.length} members`;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = "View Family Tree";
+    button.addEventListener("click", () => {
+      drawTree(selectedTree, {
+        name: family.familyName,
+        members: family.members
+      });
+      selectedTree.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    card.append(title, count, button);
+    directory.append(card);
+  });
+}
+
+document.getElementById("familySearch")
+  .addEventListener("input", renderDirectory);
+
+authReady.then(() => {
+  const approvedQuery = query(
+    collection(db, "familyTrees"),
+    where("status", "==", "approved")
+  );
+
+  onSnapshot(approvedQuery, snapshot => {
+    approvedFamilies = snapshot.docs.map(d => ({
+      id: d.id,
+      ...d.data()
+    }));
+    renderDirectory();
+  }, error => {
+    console.error("Family directory error:", error);
+    directory.textContent = "Family directory load nahi ho payi.";
+  });
+}).catch(error => {
+  console.error("Firebase authentication error:", error);
+  familyMessage.textContent = "Firebase connection nahi ho paya.";
+});
+
+// First row on page load.
+makeMemberRow();
 
 
 </script>
