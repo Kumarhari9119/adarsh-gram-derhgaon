@@ -419,6 +419,41 @@ window.onload = showResult;
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-analytics.js";
+
+
+
+
+
+
+
+
+
+
+
+
+import {
+  getAuth,
+  signInAnonymously
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+import {
+  doc,
+  setDoc,
+  getDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+
+
+
+
+
+
+
+
+
+
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -437,6 +472,49 @@ window.onload = showResult;
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
+
+
+
+
+
+
+
+
+const auth = getAuth(app);
+
+async function testFirebaseConnection() {
+  try {
+    const result = await signInAnonymously(auth);
+    const uid = result.user.uid;
+
+    const testRef = doc(db, "connectionTests", uid);
+
+    await setDoc(testRef, {
+      status: "connected",
+      testedAt: serverTimestamp()
+    });
+
+    const saved = await getDoc(testRef);
+
+    if (saved.exists()) {
+      console.log("SUCCESS: Firebase Auth + Firestore working!", uid);
+    }
+  } catch (error) {
+    console.error("Firebase test failed:", error.code, error.message);
+  }
+}
+
+testFirebaseConnection();
+
+
+
+
+
+
+
+
+
+
 </script>
 
 
