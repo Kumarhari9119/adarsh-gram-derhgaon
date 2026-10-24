@@ -812,20 +812,52 @@ document.getElementById("previewFamily")
     }
   });
 
+
+
+
+
 document.getElementById("submitFamily")
   .addEventListener("click", async () => {
     try {
       const family = getFamilyData();
-      familyMessage.textContent = "Submitting...";
+      familyMessage.textContent = "Publishing...";
 
+      // Firebase anonymous authentication ready hone ka wait
       await authReady;
 
-      await addDoc(collection(db, "familySubmissions"), {
+      // Directly public collection mein save karo
+      const familyData = {
         familyName: family.name,
         members: family.members,
-        status: "pending",
+        status: "approved",
         createdAt: serverTimestamp()
-      });
+      };
+
+      await addDoc(collection(db, "familyTrees"), familyData);
+
+      familyMessage.textContent =
+        "Family Tree successfully published! Ab sabhi log ise dekh sakte hain.";
+
+      // Form ko reset nahi kar rahe, taaki data screen par rahe.
+
+    } catch (error) {
+      console.error("Family submission error:", error);
+      familyMessage.textContent =
+        error.message || "Publishing nahi ho payi. Console check karein.";
+    }
+  });
+
+
+
+
+
+
+familyMessage.textContent =
+  "Family Tree successfully published! Ab sabhi log ise dekh sakte hain.";
+
+
+
+
 
       familyMessage.textContent =
         "Submission receive ho gayi. Review ke baad publish ki jayegi.";
