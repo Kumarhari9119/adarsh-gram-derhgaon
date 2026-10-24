@@ -822,10 +822,8 @@ document.getElementById("submitFamily")
       const family = getFamilyData();
       familyMessage.textContent = "Publishing...";
 
-      // Firebase anonymous authentication ready hone ka wait
       await authReady;
 
-      // Directly public collection mein save karo
       const familyData = {
         familyName: family.name,
         members: family.members,
@@ -838,35 +836,14 @@ document.getElementById("submitFamily")
       familyMessage.textContent =
         "Family Tree successfully published! Ab sabhi log ise dekh sakte hain.";
 
-      // Form ko reset nahi kar rahe, taaki data screen par rahe.
-
     } catch (error) {
       console.error("Family submission error:", error);
+
       familyMessage.textContent =
         error.message || "Publishing nahi ho payi. Console check karein.";
     }
   });
 
-
-
-
-
-
-familyMessage.textContent =
-  "Family Tree successfully published! Ab sabhi log ise dekh sakte hain.";
-
-
-
-
-
-      familyMessage.textContent =
-        "Submission receive ho gayi. Review ke baad publish ki jayegi.";
-    } catch (error) {
-      console.error("Family submission error:", error);
-      familyMessage.textContent = error.message ||
-        "Submission nahi ho payi. Console check karein.";
-    }
-  });
 
 function renderDirectory() {
   const search = document.getElementById("familySearch").value
